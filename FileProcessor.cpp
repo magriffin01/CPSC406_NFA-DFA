@@ -22,11 +22,53 @@ FileProcessor::~FileProcessor()
 void FileProcessor::processFile(string inputFile, string outputFile)
 {
     openFile(inputFile, true);
-    //readInputFile();
+    readInputFile();
     closeFile(inputFile, true);
     openFile(outputFile, false);
-    //writeOutputFile();
+    writeOutputFile();
     closeFile(outputFile, false);
+}
+
+// Reads the NFA from the input file
+void FileProcessor::readInputFile()
+{
+    string line;
+    
+    // TODO: Delete later
+    DFA = "";
+
+    getline(inputStream, line);
+
+    while (!inputStream.fail())
+    {
+        //TODO: Temporary code that just prints out each character, implement actual parsing the input next
+        // for (int i = 0; i < line.length(); ++i)
+        // {
+        //     if (line.at(i) == '\t')
+        //     {
+        //         cout << "Tab character found";
+        //     }
+
+        //     cout << line.at(i) << "\n";
+        // }
+
+        DFA = DFA + line + "\n";
+
+        getline(inputStream, line);
+    }
+
+    if (!inputStream.eof())
+    {
+        cout << "Input failure before reaching end of th file." << "\n";
+    }
+
+    cout << DFA;
+}
+
+// Writes the resulting DFA to the output file
+void FileProcessor::writeOutputFile()
+{
+    outputStream << DFA << flush;
 }
 
 // Takes in a string, the file name, and a bool, whether or not the file is an input or output file, and attempts to open it
