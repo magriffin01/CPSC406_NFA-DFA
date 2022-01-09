@@ -5,3 +5,12 @@
 # Course: CPSC406-01
 # Assignment: Course Project
 */
+
+using namespace std;
+
+int main(int argc, char **argv)
+{
+    
+
+    return 0;
+}
