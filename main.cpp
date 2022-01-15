@@ -17,9 +17,9 @@ int main(int argc, char **argv)
         cout << "Usage: ./courseproject <inputFile>" << "\n";
         return -1;
     }
+    
     FileProcessor *fileProcessor = new FileProcessor();
     fileProcessor->processFile(argv[1], "result.dfa");
-
 
     delete fileProcessor;
     return 0;

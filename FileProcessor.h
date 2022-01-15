@@ -33,7 +33,6 @@ class FileProcessor
 
         string NFA;
         string DFA;
-
 };
 
 #endif
