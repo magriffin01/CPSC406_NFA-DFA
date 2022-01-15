@@ -20,5 +20,7 @@ int main(int argc, char **argv)
     FileProcessor *fileProcessor = new FileProcessor();
     fileProcessor->processFile(argv[1], "result.dfa");
 
+
+    delete fileProcessor;
     return 0;
 }

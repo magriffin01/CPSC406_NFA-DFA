@@ -34,25 +34,13 @@ void FileProcessor::readInputFile()
 {
     string line;
     
-    // TODO: Delete later
-    DFA = "";
+    NFA = "";
 
     getline(inputStream, line);
 
     while (!inputStream.fail())
     {
-        //TODO: Temporary code that just prints out each character, implement actual parsing the input next
-        // for (int i = 0; i < line.length(); ++i)
-        // {
-        //     if (line.at(i) == '\t')
-        //     {
-        //         cout << "Tab character found";
-        //     }
-
-        //     cout << line.at(i) << "\n";
-        // }
-
-        DFA = DFA + line + "\n";
+        NFA = NFA + line + "\n";
 
         getline(inputStream, line);
     }
@@ -62,12 +50,15 @@ void FileProcessor::readInputFile()
         cout << "Input failure before reaching end of th file." << "\n";
     }
 
-    cout << DFA;
+    cout << NFA;
 }
 
 // Writes the resulting DFA to the output file
 void FileProcessor::writeOutputFile()
 {
+    // TODO: SET DFA TO RESULTING DFA AND DELETE LINE
+    DFA = "DFA Goes Here";
+
     outputStream << DFA << flush;
 }
 

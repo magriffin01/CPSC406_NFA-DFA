@@ -31,7 +31,7 @@ class FileProcessor
         ifstream inputStream;
         ofstream outputStream;
 
-        // Temporary - Delete Later
+        string NFA;
         string DFA;
 
 };
