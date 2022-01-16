@@ -7,20 +7,23 @@
 */
 
 #include "FileProcessor.h"
+#include "Parser.h"
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-    if (argc != 2)
-    {
-        cout << "Usage: ./courseproject <inputFile>" << "\n";
-        return -1;
-    }
+    Parser parser;
+    parser.parseNFAFile("{1}	{2}	{3}\na	b\n{2}\n{3}\n");
+    // if (argc != 2)
+    // {
+    //     cout << "Usage: ./courseproject <inputFile>" << "\n";
+    //     return -1;
+    // }
     
-    FileProcessor *fileProcessor = new FileProcessor();
-    fileProcessor->processFile(argv[1], "result.dfa");
+    // FileProcessor *fileProcessor = new FileProcessor();
+    // fileProcessor->processFile(argv[1], "result.dfa");
 
-    delete fileProcessor;
+    // delete fileProcessor;
     return 0;
 }

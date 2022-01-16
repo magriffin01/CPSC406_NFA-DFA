@@ -50,7 +50,7 @@ void FileProcessor::readInputFile()
         cout << "Input failure before reaching end of th file." << "\n";
     }
 
-    cout << NFA;
+    // cout << NFA;
 }
 
 // Writes the resulting DFA to the output file
