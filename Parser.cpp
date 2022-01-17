@@ -26,6 +26,7 @@ void Parser::parseNFAFile(string nfa)
     parseAlphabet(getNextLine(nfa));
     parseStartState(getNextLine(nfa));
     parseAcceptStates(getNextLine(nfa));
+    parseTransitionTable(nfa);
 }
 
 // Parses the states from the line of text contiaining the states
@@ -119,14 +120,71 @@ void Parser::parseAcceptStates(string acceptStateLine)
     }
 }
 
+// Parse the transition table line from the given text
+void Parser::parseTransitionTable(string NFA)
+{
+    // Initialize two empty strings, one will contain the entire line, the other containing solely the transition states and symbol
+    string line = "";
+    string transition = "";
+
+    if (newlineIndex == -1) // In the case there are no transitions in the file (EOF already reached)
+    {
+        cout << "Reached the end of file without finding any transitions. Please check the file and try again." << '\n';
+        return;
+    }
+
+    // Loop through the remaining lines in the file
+    while (newlineIndex != -1)
+    {
+        line = getNextLine(NFA);
+
+        // Checks each character in the line and performs the corresponding action based on the character
+        for (int i = 0; i < line.length(); ++i)
+        {
+            if ((line.at(i) == '{') || (line.at(i) == '}') || (line.at(i) == ' ') || (line.at(i) == ',') || (line.at(i) == '=') || (line.at(i) == 'P') || (line.at(i) == 'S'))
+            {
+                continue;
+            }
+            else if ((line.at(i) == 'E') && (line.at(i + 1) == 'P') && (line.at(i + 2) == 'S'))
+            {
+                i = i + 2;
+                transition += "EPS,";
+            }
+            else if ((line.at(i) == 'E') && ((line.at(i + 1) != 'P') || (line.at(i + 2) != 'S'))) // Character is 'E' but next characters are not for 'EPS'
+            {
+                continue;
+            }
+            else
+            {
+                transition = transition + line.at(i) + ",";
+            }
+        }
+
+        transitionFunction.push_back(transition);
+        transition = "";
+    }
+
+    // TODO: Delete once done
+    // Testing only
+    for (int i = 0; i < transitionFunction.size(); ++i)
+    {
+        cout << "Transition: " << transitionFunction[i] << '\n';
+    }
+}
+
 // Gets the next line of text needed for parsing from the string of text
 string Parser::getNextLine(string text)
 {
     string line = "";
 
     // Start i at the current newlineIndex and get the line up to the next newline char
-    for (int i = newlineIndex; i < text.length(); ++i)
+    for (int i = newlineIndex; i <= text.length(); ++i)
     {
+        if (i == text.length()) // If EOF reached, set newlineIndex to -1
+        {
+            newlineIndex = -1;
+            break;
+        }
         if (text.at(i) == '\n')
         {
             newlineIndex = i + 1; // Sets the newline index to 1 more than where the newline char was found

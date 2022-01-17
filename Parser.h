@@ -29,6 +29,7 @@ class Parser
         void parseAlphabet(string alphabetLine);
         void parseStartState(string startStateLine);
         void parseAcceptStates(string acceptStateLine);
+        void parseTransitionTable(string NFA);
 
         // TODO: Transition Function
 
@@ -38,6 +39,7 @@ class Parser
         vector<char> alphabet;
         char startState;
         vector<char> acceptStates;
+        vector<string> transitionFunction;
 
         int newlineIndex = 0;
 };

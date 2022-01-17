@@ -10,6 +10,8 @@
 #define STATE_H
 
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -30,6 +32,7 @@ class State
         string stateName;
         bool isStartState;
         bool isAcceptState;
+        unordered_map<string, vector<State>> transitionStates;
 };
 
 #endif

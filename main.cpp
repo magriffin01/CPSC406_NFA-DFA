@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     Parser parser;
-    parser.parseNFAFile("{1}	{2}	{3}\na	b\n{2}\n{3}\n");
+    parser.parseNFAFile("{1}	{2}	{3}\na	b\n{2}\n{3}\n{1}, a  = {3}\n{1}, b  = {2}\n{2}, a = {1}\n{2}, a = {2}\n{2}, b EP = {3}\n{3}, b = {1}"); // 
     // if (argc != 2)
     // {
     //     cout << "Usage: ./courseproject <inputFile>" << "\n";
