@@ -9,27 +9,37 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <string>
 #include <unordered_map>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
 class State
 {
     public:
+        // Constructor, Deconstructor
         State();
         ~State();
 
-        void SetStateName(string stateName);
+        // Setters, Getters
+        void SetStateName(char stateName);
         void SetIsStartState(bool isStartState);
         void SetIsAcceptState(bool isAcceptState);
-        string GetStateName();
+        char GetStateName();
         bool GetIsStartState();
         bool GetIsAcceptState();
+        unordered_map<string, vector<State>> GetTransitions();
+
+        void InsertTransition(string symbol, vector<State> states);
+        void RemoveTransition(string symbol);
+
+        // TODO: Delete once complete, testing only
+        void DisplayTransitionStates();
 
     private:
-        string stateName;
+        // Member variables
+        char stateName;
         bool isStartState;
         bool isAcceptState;
         unordered_map<string, vector<State>> transitionStates;

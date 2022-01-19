@@ -8,6 +8,7 @@
 
 #include "FileProcessor.h"
 #include "Parser.h"
+#include "State.h"
 
 using namespace std;
 
@@ -25,5 +26,24 @@ int main(int argc, char **argv)
     // fileProcessor->processFile(argv[1], "result.dfa");
 
     // delete fileProcessor;
+
+    State testState1;
+    State testState2;
+    State testState3;
+
+    testState1.SetStateName('1');
+    testState2.SetStateName('2');
+    testState3.SetStateName('3');
+
+    vector<State> a1;
+    a1.push_back(testState3);
+    vector<State> b1;
+    b1.push_back(testState2);
+    
+    testState1.InsertTransition("a", a1);
+    testState1.InsertTransition("b", b1);
+
+    testState1.DisplayTransitionStates();
+
     return 0;
 }

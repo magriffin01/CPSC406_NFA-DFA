@@ -10,6 +10,7 @@
 #define NFA_H
 
 #include "State.h"
+#include "Parser.h"
 #include <vector>
 
 class NFA

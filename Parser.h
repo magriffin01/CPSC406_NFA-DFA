@@ -20,27 +20,27 @@ using namespace std;
 class Parser
 {
     public:
+        // Constructor, Deconstructor
         Parser();
         ~Parser();
+
         void parseNFAFile(string nfa);
 
     private:
+        // Helper methods
         void parseStates(string stateLine);
         void parseAlphabet(string alphabetLine);
         void parseStartState(string startStateLine);
         void parseAcceptStates(string acceptStateLine);
         void parseTransitionTable(string NFA);
-
-        // TODO: Transition Function
-
         string getNextLine(string text);
 
+        // Member variables
         vector<char> states;
         vector<char> alphabet;
         char startState;
         vector<char> acceptStates;
         vector<string> transitionFunction;
-
         int newlineIndex = 0;
 };
 

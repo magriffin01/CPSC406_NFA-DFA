@@ -18,19 +18,22 @@ using namespace std;
 class FileProcessor
 {
     public:
+        // Constructor, Deconstructor
         FileProcessor();
         ~FileProcessor();
+
         void processFile(string inputFile, string outputFile);
 
     private:
+        // Helper methods
         void openFile(string fileName, bool isInput);
         void readInputFile();
         void closeFile(string fileName, bool isInput);
         void writeOutputFile();
 
+        // Members Variables
         ifstream inputStream;
         ofstream outputStream;
-
         string NFA;
         string DFA;
 };

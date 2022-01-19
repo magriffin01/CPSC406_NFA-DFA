@@ -19,7 +19,7 @@ State::~State()
 }
 
 // Setter for 'stateName' member variable
-void State::SetStateName(string stateName)
+void State::SetStateName(char stateName)
 {
     this->stateName = stateName;
 }
@@ -37,7 +37,7 @@ void State::SetIsAcceptState(bool isAcceptState)
 }
 
 // Getter for 'stateName' member variable
-string State::GetStateName()
+char State::GetStateName()
 {
     return stateName;
 }
@@ -54,3 +54,40 @@ bool State::GetIsAcceptState()
     return isAcceptState;
 }
 
+// Getter for the hashmap of trasnition states
+unordered_map<string, vector<State>> State::GetTransitions()
+{
+    return transitionStates;
+}
+
+// Inserts a vector of states into the hashmap based on the symbol to transition on
+void State::InsertTransition(string symbol, vector<State> states)
+{
+    transitionStates.insert( {symbol, states} );
+}
+
+// Removes the vector of states corresponding to a symbol in the hashmap
+void State::RemoveTransition(string symbol)
+{
+    if (transitionStates.empty())
+    {
+        return;
+    }
+
+    transitionStates.erase(symbol);
+}
+
+
+// TODO: Delete Once Complete
+void State::DisplayTransitionStates()
+{
+    for (auto iterator = transitionStates.begin(); iterator != transitionStates.end(); ++iterator)
+    {
+        cout << "Transition Symbol: " << iterator->first << '\n';
+
+        for (int i = 0; i < iterator->second.size(); ++i)
+        {
+            cout << "Transition State: " << iterator->second.at(i).GetStateName() << '\n';
+        }
+    }
+}
