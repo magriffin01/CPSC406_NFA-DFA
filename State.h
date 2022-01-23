@@ -29,7 +29,8 @@ class State
         char GetStateName();
         bool GetIsStartState();
         bool GetIsAcceptState();
-        unordered_map<string, vector<State*>> GetTransitions();
+        unordered_map<string, vector<State*>> GetAllTransitions();
+        vector<State*> GetTransition(string key);
 
         void InsertTransition(string symbol, vector<State*> states);
         void RemoveTransition(string symbol);

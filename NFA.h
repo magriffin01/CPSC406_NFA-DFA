@@ -22,7 +22,14 @@ class NFA
         NFA(Parser parser);
         ~NFA();
 
+        // Getters
+        vector<State*> GetStates();
+        vector<char> GetAlphabet();
+        State* GetStartState();
+        vector<State*> GetAcceptStates();
+
         void ConstructNFA();
+        void EpsilonClosure(State* state, vector<State*> &epsilonClosure);
 
     private:
         // Member variables
@@ -31,8 +38,6 @@ class NFA
         State* startState;
         vector<State*> acceptStates;
         Parser parser;
-
-        // TODO: DEBATING MAKING THESE STATES POINTERS, THEY PROBABLY SHOULD BE SO THEY ARE THE SAME ACROSS VECTORS
 
         // Helper methods
         void BuildStates();

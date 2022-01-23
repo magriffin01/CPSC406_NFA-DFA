@@ -19,17 +19,30 @@ NFA::~NFA()
     {
         delete states[i];
     }
+}
 
-    // TODO: Delete Once Complete
-    for (int i = 0; i < states.size(); ++i)
-    {
-        cout << "States Left: " << states[i]->GetStateName() << '\n';
-    }
+// Returns the vector of state pointers
+vector<State*> NFA::GetStates()
+{
+    return states;
+}
 
-    for (int i = 0; i < acceptStates.size(); ++i)
-    {
-        cout << "Accept States Left: " << acceptStates[i]->GetStateName() << '\n';
-    }
+// Returns the vector of char
+vector<char> NFA::GetAlphabet()
+{
+    return alphabet;
+}
+
+// Returns the pointer to the start state
+State* NFA::GetStartState()
+{
+    return startState;
+}
+
+// Returns the vector of state pointers that are accept states
+vector<State*> NFA::GetAcceptStates()
+{
+    return acceptStates;
 }
 
 // Builds the NFA resulting from the work the parser has done on the file
@@ -41,11 +54,50 @@ void NFA::ConstructNFA()
     SetStartState();
     SetAcceptStates();
     SetTransitions();
-    // Make states for each state
-    // Set the alphabet
-    // Set the start state
-    // Set the accept states
-    // Fill in the transitions
+
+    // TODO: Delete once done
+    State* state2 = GetState('2');
+    vector<State*> test;
+    EpsilonClosure(state2, test);
+    sort(test.begin(), test.end());
+
+    cout << "Epislon Closure of State 2: " << '\n';
+    for (int i = 0; i < test.size(); ++i)
+    {
+        cout << "States: " << test[i]->GetStateName() << '\n';
+    }
+}
+
+
+// Computes the epislon closure of a given state
+void NFA::EpsilonClosure(State* state, vector<State*> &epsilonClosure)
+{
+    // Push itself
+    epsilonClosure.push_back(state);
+
+    vector<State*> epsilonTransition = state->GetTransition("EPS"); // Get the transitions for EPS
+
+    if (epsilonTransition.size() == 0)
+    {
+        return;
+    }
+
+    // Check for duplicates that could result in an infinite loop and delete them
+    for (int i = 0; i < epsilonTransition.size(); ++i)
+    {
+        for (int j = 0; j < epsilonClosure.size(); ++j)
+        {
+            if (epsilonTransition[i] == epsilonClosure[j])
+            {
+                epsilonTransition.erase(epsilonTransition.begin() + i);
+            }
+        }
+    }
+
+    for (int i = 0; i < epsilonTransition.size(); ++i)
+    {
+        EpsilonClosure(epsilonTransition[i], epsilonClosure);
+    }
 }
 
 // Makes a state for each state from the parser

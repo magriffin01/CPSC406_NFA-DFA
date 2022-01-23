@@ -55,9 +55,22 @@ bool State::GetIsAcceptState()
 }
 
 // Getter for the hashmap of trasnition states
-unordered_map<string, vector<State*>> State::GetTransitions()
+unordered_map<string, vector<State*>> State::GetAllTransitions()
 {
     return transitionStates;
+}
+
+// Return the vector of states corresponding to a particular transition symbol
+vector<State*> State::GetTransition(string key)
+{
+    if (transitionStates.find(key) == transitionStates.end())
+    {
+        return vector<State*>(0); // Return an empty vector if none exist
+    }
+    else
+    {
+        return transitionStates.find(key)->second;
+    }
 }
 
 // Inserts a vector of states into the hashmap based on the symbol to transition on
