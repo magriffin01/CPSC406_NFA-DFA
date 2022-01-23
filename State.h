@@ -29,9 +29,9 @@ class State
         char GetStateName();
         bool GetIsStartState();
         bool GetIsAcceptState();
-        unordered_map<string, vector<State>> GetTransitions();
+        unordered_map<string, vector<State*>> GetTransitions();
 
-        void InsertTransition(string symbol, vector<State> states);
+        void InsertTransition(string symbol, vector<State*> states);
         void RemoveTransition(string symbol);
 
         // TODO: Delete once complete, testing only
@@ -40,9 +40,9 @@ class State
     private:
         // Member variables
         char stateName;
-        bool isStartState;
-        bool isAcceptState;
-        unordered_map<string, vector<State>> transitionStates;
+        bool isStartState = false;
+        bool isAcceptState = false;
+        unordered_map<string, vector<State*>> transitionStates;
 };
 
 #endif

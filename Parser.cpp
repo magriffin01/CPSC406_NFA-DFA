@@ -18,6 +18,36 @@ Parser::~Parser()
 
 }
 
+// Returns the vector of char containing the state names
+vector<char> Parser::GetParsedStates()
+{
+    return states;
+}
+
+// Returns the vector of char contnaining the alphabet
+vector<char> Parser::GetParsedAlphabet()
+{
+    return alphabet;
+}
+
+// Returns the state name of the start state
+char Parser::GetParsedStartState()
+{
+    return startState;
+}
+
+// Returns the vector of char contianing the valid accept states
+vector<char> Parser::GetParsedAcceptStates()
+{
+    return acceptStates;
+}
+
+// Returns the vector of strings containg the transitions
+vector<string> Parser::GetParsedTransitionFunction()
+{
+    return transitionFunction;
+}
+
 // Parses the NFA string and fills in the respective member variables
 void Parser::parseNFAFile(string nfa)
 {

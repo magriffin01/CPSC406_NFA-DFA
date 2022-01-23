@@ -24,6 +24,13 @@ class Parser
         Parser();
         ~Parser();
 
+        // Getters for member variables
+        vector<char> GetParsedStates();
+        vector<char> GetParsedAlphabet();
+        char GetParsedStartState();
+        vector<char> GetParsedAcceptStates();
+        vector<string> GetParsedTransitionFunction();
+
         void parseNFAFile(string nfa);
 
     private:

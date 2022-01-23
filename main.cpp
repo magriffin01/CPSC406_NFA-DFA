@@ -9,13 +9,16 @@
 #include "FileProcessor.h"
 #include "Parser.h"
 #include "State.h"
+#include "NFA.h"
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
     Parser parser;
-    parser.parseNFAFile("{1}	{2}	{3}\na	b\n{2}\n{3}\n{1}, a  = {3}\n{1}, b  = {2}\n{2}, a = {1}\n{2}, a = {2}\n{2}, b EP = {3}\n{3}, b = {1}"); // 
+    parser.parseNFAFile("{1}	{2}	{3}\na	b\n{2}\n{3}\n{1}, a  = {3}\n{1}, b  = {2}\n{2}, a = {1}\n{2}, a = {2}\n{2}, EPS = {3}\n{3}, b = {1}"); // 
+    NFA nfa(parser);
+    nfa.ConstructNFA();
     // if (argc != 2)
     // {
     //     cout << "Usage: ./courseproject <inputFile>" << "\n";
@@ -27,23 +30,34 @@ int main(int argc, char **argv)
 
     // delete fileProcessor;
 
-    State testState1;
-    State testState2;
-    State testState3;
+    // State testState1;
+    // State testState2;
+    // State testState3;
 
-    testState1.SetStateName('1');
-    testState2.SetStateName('2');
-    testState3.SetStateName('3');
+    // testState1.SetStateName('1');
+    // testState2.SetStateName('2');
+    // testState3.SetStateName('3');
 
-    vector<State> a1;
-    a1.push_back(testState3);
-    vector<State> b1;
-    b1.push_back(testState2);
+    // vector<State> a1;
+    // a1.push_back(testState3);
+    // vector<State> b1;
+    // b1.push_back(testState2);
     
-    testState1.InsertTransition("a", a1);
-    testState1.InsertTransition("b", b1);
+    // testState1.InsertTransition("a", a1);
+    // testState1.InsertTransition("b", b1);
+    
+    // vector<State> a2;
+    // a2.push_back(testState1);
+    // a2.push_back(testState2);
 
-    testState1.DisplayTransitionStates();
+    // vector<State> eps2;
+    // eps2.push_back(testState3);
+    
+    // testState2.InsertTransition("a", a2);
+    // testState2.InsertTransition("EPS", eps2);
+
+    // testState1.DisplayTransitionStates();
+    // testState2.DisplayTransitionStates();
 
     return 0;
 }

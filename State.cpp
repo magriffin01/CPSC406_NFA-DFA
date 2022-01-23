@@ -55,13 +55,13 @@ bool State::GetIsAcceptState()
 }
 
 // Getter for the hashmap of trasnition states
-unordered_map<string, vector<State>> State::GetTransitions()
+unordered_map<string, vector<State*>> State::GetTransitions()
 {
     return transitionStates;
 }
 
 // Inserts a vector of states into the hashmap based on the symbol to transition on
-void State::InsertTransition(string symbol, vector<State> states)
+void State::InsertTransition(string symbol, vector<State*> states)
 {
     transitionStates.insert( {symbol, states} );
 }
@@ -87,7 +87,7 @@ void State::DisplayTransitionStates()
 
         for (int i = 0; i < iterator->second.size(); ++i)
         {
-            cout << "Transition State: " << iterator->second.at(i).GetStateName() << '\n';
+            cout << "Transition State: " << iterator->second.at(i)->GetStateName() << '\n';
         }
     }
 }
