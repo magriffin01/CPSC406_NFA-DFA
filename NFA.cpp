@@ -53,26 +53,11 @@ vector<State*> NFA::GetAcceptStates()
 // Builds the NFA resulting from the work the parser has done on the file
 void NFA::ConstructNFA()
 {
-    cout << "\n" << "Constructing NFA: " << "\n";
     BuildStates();
     SetAlphabet();
     SetStartState();
     SetAcceptStates();
     SetTransitions();
-
-    // TODO: Delete once done
-    State* state2 = GetState('2');
-    vector<State*> test;
-    EpsilonClosure(state2, test);
-    sort(test.begin(), test.end());
-
-    cout << "Epislon Closure of State 2: " << '\n';
-    for (int i = 0; i < test.size(); ++i)
-    {
-        cout << "States: " << test[i]->GetStateName() << '\n';
-    }
-
-    cout << "Start State: " << startState->GetStateName() << '\n';
 }
 
 
@@ -104,11 +89,6 @@ void NFA::EpsilonClosure(State* state, vector<State*> &epsilonClosure)
     for (int i = 0; i < epsilonTransition.size(); ++i)
     {
         EpsilonClosure(epsilonTransition[i], epsilonClosure);
-        
-        // if (epsilonTransition[i] == state)
-        // {
-        //     epsilonTransition.erase(epsilonTransition.begin() + i);
-        // }
     }
     
 }
@@ -122,26 +102,12 @@ void NFA::BuildStates()
         stateToAdd->SetStateName(parser.GetParsedStates()[i]);
         states.push_back(stateToAdd);
     }
-
-    // TODO: Delete once complete
-    // For testing only
-    for (int i = 0; i < states.size(); ++i)
-    {
-        cout << "State: " << states[i]->GetStateName() << '\n';
-    }
 }
 
 // Sets the alphabet in the NFA
 void NFA::SetAlphabet()
 {
     alphabet = parser.GetParsedAlphabet();
-
-    // TODO: Delete once complete
-    // For testing only
-    for (int i = 0; i < alphabet.size(); ++i)
-    {
-        cout << "Symbol: " << alphabet[i] << '\n';
-    }
 }
 
 // Sets the start state
@@ -155,10 +121,6 @@ void NFA::SetStartState()
             startState = states[i];
         }
     }
-
-    // TODO: Delete once complete
-    // For testing only
-    cout << "Start State: " << startState->GetStateName() << '\n';
 }
 
 // Sets the accept states
@@ -175,20 +137,11 @@ void NFA::SetAcceptStates()
             }
         }
     }
-
-    // TODO: Delete once complete
-    // For testing only
-    for (int i = 0; i < acceptStates.size(); ++i)
-    {
-        cout << "Accept State: " << acceptStates[i]->GetStateName() << '\n';
-    }
 }
 
 // Fills in the transition hash map in each of the states
 void NFA::SetTransitions()
 {
-    // Get the state name from the parser
-    // Insert the transitions in the states
     char stateName;
     State* state;
     State* transitionState;
@@ -250,14 +203,6 @@ void NFA::SetTransitions()
         // Insert the transitions into the hash map in the state and clear the vector
         state->InsertTransition(originalTransitionSymbol, transitions);
         transitions.clear();
-    }
-
-    // TODO: Delete once complete
-    // For testing only
-    for (int i = 0; i < states.size(); ++i)
-    {
-        cout << "State: " << states[i]->GetStateName() << '\n';
-        states[i]->DisplayTransitionStates();
     }
 }
 

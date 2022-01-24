@@ -37,7 +37,6 @@ class State
         void InsertTransition(string symbol, vector<State*> states);
         void RemoveTransition(string symbol);
 
-        // TODO: Delete once complete, testing only
         void DisplayTransitionStates();
 
     private:

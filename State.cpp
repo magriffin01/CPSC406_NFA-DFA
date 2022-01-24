@@ -101,8 +101,7 @@ void State::RemoveTransition(string symbol)
     transitionStates.erase(symbol);
 }
 
-
-// TODO: Delete Once Complete
+// Displays the transitions with the symbol and then the transition state
 void State::DisplayTransitionStates()
 {
     for (auto iterator = transitionStates.begin(); iterator != transitionStates.end(); ++iterator)

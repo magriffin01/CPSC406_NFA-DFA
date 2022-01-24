@@ -30,7 +30,7 @@ class Parser
         char GetParsedStartState();
         vector<char> GetParsedAcceptStates();
         vector<string> GetParsedTransitionFunction();
-
+        
         void parseNFAFile(string nfa);
 
     private:

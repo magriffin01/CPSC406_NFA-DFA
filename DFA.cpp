@@ -36,43 +36,8 @@ string DFA::GetDFA()
 // Converts NFA to DFA
 void DFA::ConvertFromNFA()
 {
-    // Epsilon Closure the start state from NFA
-    // From start state, look at all possible transitions on the alphabet and find new states
-    // Once there are no new states, done
-    // Set Accept States
-    cout << "Constructing DFA" << '\n';
-    // Set all Epsilon Closures
-    // Set Start State
-    // Calculate Remaining States
-        // Loop until an index is greater than states.size
-        // Check each state on each letter
-        // If a new state is made, push to states
-        // Add the transitions
-    // Set accept states
     SetStartState();
     CalculateRemainingStates();
-
-    cout << "STATES IN CONSTRUCTION: " << '\n';
-    for (int row = 0; row < statesInConstruction.size(); ++row)
-    {
-        for (int column = 0; column < statesInConstruction[row].size(); ++column)
-        {
-            cout << "ROW: " << row << " COLUMN: " << column << '\n';
-            cout << "STATE: " << statesInConstruction[row][column]->GetStateName() << '\n';
-        }
-    }
-
-    cout << "COMBINED STATES: " << '\n';
-    for (int i = 0; i < states.size(); ++i)
-    {
-        cout << "State: " << states[i]->GetCombinedStateName() << '\n';
-    }
-
-    for (int i = 0; i < states.size(); ++i)
-    {
-        cout << "State Name: " << states[i]->GetCombinedStateName() << '\n';
-        states[i]->DisplayTransitionStates();
-    }
 }
 
 // Converts DFA to string
@@ -113,9 +78,6 @@ void DFA::SetStartState()
     }
 
     states.push_back(startState);
-
-    // TODO: Delete once complete
-    cout << "Start State: " << startState->GetCombinedStateName() << '\n';
 }
 
 // Calculates the Remaining States
@@ -134,18 +96,16 @@ void DFA::CalculateRemainingStates()
 
     while (index < states.size()) // Loop on the states vector
     {
-        cout << '\n' << "Index: " << index << '\n';
         currentCombinedState = states[index]; // Set the currentCombinedState
-        cout << "Current Combined State: " << states[index]->GetCombinedStateName() << '\n';
+
         for (int symbol = 0; symbol < alphabet.size(); ++symbol) // Loop on the alphabet
         {
             currentSymbol = alphabet[symbol]; // Set the current symbol to the current symbol in the alpha
-            cout << "Symbol: " << currentSymbol << '\n';
 
             for (int column = 0; column < statesInConstruction[index].size(); ++column) // Loop through the original NFA states
             {
                 currentStateInConstruction = statesInConstruction[index][column]; // Get the current state in construction (a vector that cotnains the vector of the individual states from the nfa)
-                cout << "Construct State: " << currentStateInConstruction->GetStateName() << '\n';
+
                 currentTransitions = currentStateInConstruction->GetTransition(currentSymbol); // Get the transitions from the NFA state
 
                 if (currentTransitions.size() == 0) // If no transitions, continue
@@ -155,10 +115,8 @@ void DFA::CalculateRemainingStates()
             
                 for (int i = 0; i < currentTransitions.size(); ++i) // Loop through possible transitions to add
                 {
-                    
                     if (find(newTransitions.begin(), newTransitions.end(), currentTransitions[i]) == newTransitions.end()) // If the transition does not already exist, add
                     {
-                        cout << "Adding Transition: " << currentTransitions[i]->GetStateName() << '\n';
                         newTransitions.push_back(currentTransitions[i]);
                     }
                 }
@@ -172,10 +130,8 @@ void DFA::CalculateRemainingStates()
                 // If epsilon transitions exist, check to see if that transition already exists, if not, add
                 for (int i = 0; i < currentEpsilonTransitions.size(); ++i)
                 {
-                    
                     if (find(newTransitions.begin(), newTransitions.end(), currentEpsilonTransitions[i]) == newTransitions.end()) // If transition does not already exist, add
                     {
-                        cout << "Adding EPS Transition: " << currentEpsilonTransitions[i]->GetStateName() << '\n';
                         newTransitions.push_back(currentEpsilonTransitions[i]);
                     }
                 }
@@ -184,11 +140,6 @@ void DFA::CalculateRemainingStates()
             }
 
             sort(newTransitions.begin(), newTransitions.end());
-
-            for (int i = 0; i < newTransitions.size(); ++i)
-            {
-                cout << "New Trans.: " << newTransitions[i]->GetStateName() << '\n';
-            }
 
             if (find(statesInConstruction.begin(), statesInConstruction.end(), newTransitions) == statesInConstruction.end()) // If the vector is of new transitions is not already in states in construction, add
             {
@@ -214,7 +165,6 @@ void DFA::CalculateRemainingStates()
             {
                 if (newStateName == states[i]->GetCombinedStateName())
                 {
-                    cout << "Is repeated State: " << newStateName << '\n';
                     isRepeatedState = true;
                     newState = states[i];
                 }
@@ -224,7 +174,6 @@ void DFA::CalculateRemainingStates()
             {
                 newState = new State();
                 newState->SetCombinedStateName(newStateName);
-                cout << "New State: " << newStateName << '\n';
                 newState->SetIsAcceptState(isNewStateAcceptState);
                 if (newState->GetIsAcceptState())
                 {
@@ -273,7 +222,6 @@ void DFA::MakeDFAString()
     transitionFunction = GetTransitionFunction();
 
     dfa = listOfStates + listOfSymbols + startStateName + setOfValidAcceptStates + transitionFunction;
-    cout << dfa;
 }
 
 // Returns the list of states in the DFA as a string
@@ -290,7 +238,6 @@ string DFA::GetListOfStates()
         result = result + "}" + '\t'; // Add closing brace and tab character
     }
 
-    cout << "List of States: " << result << '\n';
     return result + '\n';
 }
 
@@ -305,7 +252,6 @@ string DFA::GetListOfSymbols()
         result += '\t';
     }
 
-    cout << "List of Symbols: " << result << '\n';
     return result + '\n';
 }
 
@@ -318,7 +264,6 @@ string DFA::GetStartName()
     result += name;
     result = result + "}";
 
-    cout << "Start State: " << result << '\n';
     return result + '\n';
 }
 
@@ -335,7 +280,6 @@ string DFA::GetSetOfValidAcceptStates()
         result = result + "}" + '\t';
     }
 
-    cout << "List of Accept States: " << result << '\n';
     return result + '\n';
 }
 
@@ -369,7 +313,6 @@ string DFA::GetTransitionFunction()
         
     }
 
-    cout << "Transition Function: " << '\n' << result << '\n';
     return result + '\n';
 }
 

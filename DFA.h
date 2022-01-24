@@ -42,7 +42,6 @@ class DFA
         string GetStartName();
         string GetSetOfValidAcceptStates();
         string GetTransitionFunction();
-
         string RemoveCommasInName(string name);
 
         // Member variables

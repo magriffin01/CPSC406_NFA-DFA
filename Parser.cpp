@@ -72,13 +72,6 @@ void Parser::parseStates(string stateLine)
 
         states.push_back(stateLine.at(i));
     }
-
-    // TODO: Delete once finished
-    // Testing Only
-    for (int i = 0; i < states.size(); ++i)
-    {
-        cout << "State: " << states[i] << "\n";
-    }
 }
 
 // Parses the alphabet from the line of text containing the alphabet
@@ -92,13 +85,6 @@ void Parser::parseAlphabet(string alphabetLine)
         }
 
         alphabet.push_back(alphabetLine.at(i));
-    }
-
-    // TODO: Delete once finished
-    // Testing only
-    for (int i = 0; i < alphabet.size(); ++i)
-    {
-        cout << "Symbol: " << alphabet[i] << "\n";
     }
 }
 
@@ -119,9 +105,6 @@ void Parser::parseStartState(string startStateLine)
 
         startState = startStateLine.at(i);
     }
-
-    // TODO: Delete once finished
-    cout << "Start State: " << startState << "\n";
 }
 
 // Parse the accept states from the line of text containg the accept states
@@ -140,13 +123,6 @@ void Parser::parseAcceptStates(string acceptStateLine)
         }
 
         acceptStates.push_back(acceptStateLine.at(i));
-    }
-
-    // TODO: Delete once done
-    // Testing only
-    for (int i = 0; i < acceptStates.size(); ++i)
-    {
-        cout << "Accept State: " << acceptStates[i] << '\n';
     }
 }
 
@@ -192,13 +168,6 @@ void Parser::parseTransitionTable(string NFA)
 
         transitionFunction.push_back(transition);
         transition = "";
-    }
-
-    // TODO: Delete once done
-    // Testing only
-    for (int i = 0; i < transitionFunction.size(); ++i)
-    {
-        cout << "Transition: " << transitionFunction[i] << '\n';
     }
 }
 
