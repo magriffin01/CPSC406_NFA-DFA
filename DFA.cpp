@@ -27,6 +27,13 @@ DFA::~DFA()
     }
 }
 
+// Returns the DFA string
+string DFA::GetDFA()
+{
+    return dfa;
+}
+
+// Converts NFA to DFA
 void DFA::ConvertFromNFA()
 {
     // Epsilon Closure the start state from NFA
@@ -66,9 +73,12 @@ void DFA::ConvertFromNFA()
         cout << "State Name: " << states[i]->GetCombinedStateName() << '\n';
         states[i]->DisplayTransitionStates();
     }
+}
 
+// Converts DFA to string
+void DFA::ToString()
+{
     MakeDFAString();
-    // SetRemaingStates();
 }
 
 // Sets the start state
@@ -173,7 +183,7 @@ void DFA::CalculateRemainingStates()
                 currentEpsilonTransitions.clear();
             }
 
-            sort(newTransitions.begin(), newTransitions.end()); // Sort the transitions in ascending order
+            sort(newTransitions.begin(), newTransitions.end());
 
             for (int i = 0; i < newTransitions.size(); ++i)
             {

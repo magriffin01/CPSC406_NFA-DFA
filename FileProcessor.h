@@ -22,14 +22,17 @@ class FileProcessor
         FileProcessor();
         ~FileProcessor();
 
-        void processFile(string inputFile, string outputFile);
+        // void processFile(string inputFile, string outputFile);
+        void ProcessInput(string inputFile);
+        void WriteToFile(string outputFile, string dfa);
+        string GetNFAInput();
 
     private:
         // Helper methods
         void openFile(string fileName, bool isInput);
         void readInputFile();
         void closeFile(string fileName, bool isInput);
-        void writeOutputFile();
+        void writeOutputFile(string dfa);
 
         // Members Variables
         ifstream inputStream;

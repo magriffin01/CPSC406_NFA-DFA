@@ -25,8 +25,11 @@ class DFA
         DFA(NFA* nfa);
         ~DFA();
 
-        void ConvertFromNFA();
+        // Getter
         string GetDFA();
+
+        void ConvertFromNFA();
+        void ToString();
 
     private:
         // Helper methods

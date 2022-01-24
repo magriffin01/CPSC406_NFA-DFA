@@ -18,15 +18,26 @@ FileProcessor::~FileProcessor()
     
 }
 
-// Takes in an input file and output file, reads the input file, and writes the output file
-void FileProcessor::processFile(string inputFile, string outputFile)
+// Takes in an input file and reads the input file
+void FileProcessor::ProcessInput(string inputFile)
 {
     openFile(inputFile, true);
     readInputFile();
     closeFile(inputFile, true);
+}
+
+// Takes in an output file and writes the output file
+void FileProcessor::WriteToFile(string outputFile, string dfa)
+{
     openFile(outputFile, false);
-    writeOutputFile();
+    writeOutputFile(dfa);
     closeFile(outputFile, false);
+}
+
+// Returns the NFA read from the file
+string FileProcessor::GetNFAInput()
+{
+    return NFA;
 }
 
 // Reads the NFA from the input file
@@ -49,15 +60,12 @@ void FileProcessor::readInputFile()
     {
         cout << "Input failure before reaching end of th file." << "\n";
     }
-
-    // cout << NFA;
 }
 
 // Writes the resulting DFA to the output file
-void FileProcessor::writeOutputFile()
+void FileProcessor::writeOutputFile(string dfa)
 {
-    // TODO: SET DFA TO RESULTING DFA AND DELETE LINE
-    DFA = "DFA Goes Here";
+    DFA = dfa;
 
     outputStream << DFA << flush;
 }
