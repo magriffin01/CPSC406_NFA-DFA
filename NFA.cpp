@@ -8,6 +8,11 @@
 
 #include "NFA.h"
 
+NFA::NFA()
+{
+
+}
+
 NFA::NFA(Parser parser)
 {
     this->parser = parser;
@@ -66,6 +71,8 @@ void NFA::ConstructNFA()
     {
         cout << "States: " << test[i]->GetStateName() << '\n';
     }
+
+    cout << "Start State: " << startState->GetStateName() << '\n';
 }
 
 
@@ -97,7 +104,13 @@ void NFA::EpsilonClosure(State* state, vector<State*> &epsilonClosure)
     for (int i = 0; i < epsilonTransition.size(); ++i)
     {
         EpsilonClosure(epsilonTransition[i], epsilonClosure);
+        
+        // if (epsilonTransition[i] == state)
+        // {
+        //     epsilonTransition.erase(epsilonTransition.begin() + i);
+        // }
     }
+    
 }
 
 // Makes a state for each state from the parser
@@ -140,7 +153,6 @@ void NFA::SetStartState()
         {
             states[i]->SetIsStartState(true);
             startState = states[i];
-            return;
         }
     }
 

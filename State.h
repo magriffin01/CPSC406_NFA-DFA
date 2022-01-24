@@ -26,9 +26,11 @@ class State
         void SetStateName(char stateName);
         void SetIsStartState(bool isStartState);
         void SetIsAcceptState(bool isAcceptState);
+        void SetCombinedStateName(string stateName);
         char GetStateName();
         bool GetIsStartState();
         bool GetIsAcceptState();
+        string GetCombinedStateName();
         unordered_map<string, vector<State*>> GetAllTransitions();
         vector<State*> GetTransition(string key);
 
@@ -41,6 +43,7 @@ class State
     private:
         // Member variables
         char stateName;
+        string combinedStateName;
         bool isStartState = false;
         bool isAcceptState = false;
         unordered_map<string, vector<State*>> transitionStates;

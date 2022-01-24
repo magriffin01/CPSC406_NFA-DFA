@@ -15,10 +15,12 @@
 #include <string>
 #include <iostream>
 
+
 class NFA
 {
     public:
         // Constructor, Deconstructor
+        NFA();
         NFA(Parser parser);
         ~NFA();
 

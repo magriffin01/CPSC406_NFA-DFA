@@ -36,6 +36,12 @@ void State::SetIsAcceptState(bool isAcceptState)
     this->isAcceptState = isAcceptState;
 }
 
+// Setter for 'commbinedStateName'
+void State::SetCombinedStateName(string stateName)
+{
+    combinedStateName = stateName;
+}
+
 // Getter for 'stateName' member variable
 char State::GetStateName()
 {
@@ -52,6 +58,11 @@ bool State::GetIsStartState()
 bool State::GetIsAcceptState()
 {
     return isAcceptState;
+}
+
+string State::GetCombinedStateName()
+{
+    return combinedStateName;
 }
 
 // Getter for the hashmap of trasnition states
@@ -100,7 +111,7 @@ void State::DisplayTransitionStates()
 
         for (int i = 0; i < iterator->second.size(); ++i)
         {
-            cout << "Transition State: " << iterator->second.at(i)->GetStateName() << '\n';
+            cout << "Transition State: " << iterator->second.at(i)->GetCombinedStateName() << '\n';
         }
     }
 }
