@@ -26,22 +26,30 @@ class DFA
         ~DFA();
 
         void ConvertFromNFA();
+        string GetDFA();
 
     private:
         // Helper methods
         void SetStartState();
         void CalculateRemainingStates();
+        bool IsEmptyState(string stateName);
+        void MakeDFAString();
+        string GetListOfStates();
+        string GetListOfSymbols();
+        string GetStartName();
+        string GetSetOfValidAcceptStates();
+        string GetTransitionFunction();
 
+        string RemoveCommasInName(string name);
 
         // Member variables
         vector<State*> states;
         vector<char> alphabet;
         State* startState;
         vector<State*> acceptStates;
-
         vector<vector<State*>> statesInConstruction;
-
         NFA* nfa;
+        string dfa;
 };
 
 #endif

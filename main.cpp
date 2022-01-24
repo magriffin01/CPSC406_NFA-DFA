@@ -25,18 +25,18 @@ int main(int argc, char **argv)
 
     
 
-    Parser *parser2 = new Parser();
-    parser2->parseNFAFile("{1}	{2}	{3}\na	b\n{1}\n{1}\n{1}, b = {2}\n{1}, EPS = {3}\n{2}, a = {2}\n{2}, a = {3}\n{2}, b = {3}\n{3}, a = {1}");
-    NFA *nfa2 = new NFA(*parser2);
-    nfa2->ConstructNFA();
-    DFA *dfa2 = new DFA(nfa2);
-    dfa2->ConvertFromNFA();
+    // Parser *parser2 = new Parser();
+    // parser2->parseNFAFile("{1}	{2}	{3}\na	b\n{1}\n{1}\n{1}, b = {2}\n{1}, EPS = {3}\n{2}, a = {2}\n{2}, a = {3}\n{2}, b = {3}\n{3}, a = {1}");
+    // NFA *nfa2 = new NFA(*parser2);
+    // nfa2->ConstructNFA();
+    // DFA *dfa2 = new DFA(nfa2);
+    // dfa2->ConvertFromNFA();
 
     delete nfa;
     delete dfa;
-    delete parser2;
-    delete nfa2;
-    delete dfa2;
+    // delete parser2;
+    // delete nfa2;
+    // delete dfa2;
 
     // if (argc != 2)
     // {

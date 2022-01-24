@@ -60,6 +60,14 @@ void DFA::ConvertFromNFA()
     {
         cout << "State: " << states[i]->GetCombinedStateName() << '\n';
     }
+
+    for (int i = 0; i < states.size(); ++i)
+    {
+        cout << "State Name: " << states[i]->GetCombinedStateName() << '\n';
+        states[i]->DisplayTransitionStates();
+    }
+
+    MakeDFAString();
     // SetRemaingStates();
 }
 
@@ -88,6 +96,12 @@ void DFA::SetStartState()
     startState = new State();
     startState->SetCombinedStateName(newName);
     startState->SetIsAcceptState(isAcceptState);
+
+    if (isAcceptState)
+    {
+        acceptStates.push_back(startState);
+    }
+
     states.push_back(startState);
 
     // TODO: Delete once complete
@@ -97,7 +111,7 @@ void DFA::SetStartState()
 // Calculates the Remaining States
 void DFA::CalculateRemainingStates()
 {
-    int index = 0; // Index used to see if we are bigger than states.size()
+    int index = 0; // Index used to see if we are bigger than states.size() (i.e. we have no more states to process)
     State* currentCombinedState; // Current combined state (new state in the DFA)
     State* currentStateInConstruction; // State we are looking at in Construction
     vector<State*> currentTransitions; // Transitions from a single NFA state
@@ -107,7 +121,6 @@ void DFA::CalculateRemainingStates()
     string newStateName = ","; // name of the new state
     bool isNewStateAcceptState = false; // Boolean for determining if a state is an accept state
     string currentSymbol = ""; // Current Symbol in Alphabet we are on
-
 
     while (index < states.size()) // Loop on the states vector
     {
@@ -130,7 +143,7 @@ void DFA::CalculateRemainingStates()
                     continue;
                 }
             
-                for (int i = 0; i < currentTransitions.size(); ++i)
+                for (int i = 0; i < currentTransitions.size(); ++i) // Loop through possible transitions to add
                 {
                     
                     if (find(newTransitions.begin(), newTransitions.end(), currentTransitions[i]) == newTransitions.end()) // If the transition does not already exist, add
@@ -181,7 +194,7 @@ void DFA::CalculateRemainingStates()
                 newStateName = newStateName + newTransitions[i]->GetStateName() + ","; // Set the new state name
             }
 
-            if (newStateName == ",") // If state name is just a comma, must be EM
+            if (IsEmptyState(newStateName)) // If state name is just a comma, must be EM
             {
                 newStateName = "EM";
             }
@@ -212,20 +225,162 @@ void DFA::CalculateRemainingStates()
 
             vector<State*> vecNewState; // Temporary vector to add new state to to use InsertTransition
             vecNewState.push_back(newState);
-
             currentCombinedState->InsertTransition(currentSymbol, vecNewState);
 
             newStateName = ","; // Reset state name and clear new transitions
             newTransitions.clear();
+            isNewStateAcceptState = false;
         }
 
-        ++index; // increment index
-    }
-
-    for (int i = 0; i < states.size(); ++i)
-    {
-        cout << "State Name: " << states[i]->GetCombinedStateName() << '\n';
-        states[i]->DisplayTransitionStates();
+        ++index; // go to the next element in the states vector
     }
 }
 
+// Returns whether the given state name is an empty state or not
+bool DFA::IsEmptyState(string stateName)
+{
+    if (stateName == ",")
+    {
+        return true;
+    }
+
+    return false;
+}
+
+// Converts the DFA to a string
+void DFA::MakeDFAString()
+{
+    string listOfStates;
+    string listOfSymbols;
+    string startStateName;
+    string setOfValidAcceptStates;
+    string transitionFunction;
+
+    listOfStates = GetListOfStates();
+    listOfSymbols = GetListOfSymbols();
+    startStateName = GetStartName();
+    setOfValidAcceptStates = GetSetOfValidAcceptStates();
+    transitionFunction = GetTransitionFunction();
+
+    dfa = listOfStates + listOfSymbols + startStateName + setOfValidAcceptStates + transitionFunction;
+    cout << dfa;
+}
+
+// Returns the list of states in the DFA as a string
+string DFA::GetListOfStates()
+{
+    string result = "";
+
+    for (int i = 0; i < states.size(); ++i) // Loop through each state
+    {
+        result += "{"; // State is encompassed by braces so add at beginning and at end
+
+        string name = RemoveCommasInName(states[i]->GetCombinedStateName()); // Get the state name and check if it is empty
+        result += name;
+        result = result + "}" + '\t'; // Add closing brace and tab character
+    }
+
+    cout << "List of States: " << result << '\n';
+    return result + '\n';
+}
+
+// Returns a string of the list of symbols
+string DFA::GetListOfSymbols()
+{
+    string result = "";
+    
+    for (int i = 0; i < alphabet.size(); ++i) // Loop through alphabet
+    {
+        result += alphabet[i];
+        result += '\t';
+    }
+
+    cout << "List of Symbols: " << result << '\n';
+    return result + '\n';
+}
+
+// Returns a string of the start state name
+string DFA::GetStartName()
+{
+    string result = "{";
+
+    string name = RemoveCommasInName(startState->GetCombinedStateName());
+    result += name;
+    result = result + "}";
+
+    cout << "Start State: " << result << '\n';
+    return result + '\n';
+}
+
+// Returns a string of the valid accept states
+string DFA::GetSetOfValidAcceptStates()
+{
+    string result = "";
+
+    for (int i = 0; i < acceptStates.size(); ++i)
+    {
+        result += "{";
+        string name = RemoveCommasInName(acceptStates[i]->GetCombinedStateName());
+        result += name;
+        result = result + "}" + '\t';
+    }
+
+    cout << "List of Accept States: " << result << '\n';
+    return result + '\n';
+}
+
+// Returns the transition function as a string
+string DFA::GetTransitionFunction()
+{
+    string result = "";
+
+    for (int i = 0; i < states.size(); ++i)
+    {
+        result += "{";
+
+        State* currentState = states[i]; // Set Temp Current State
+        string name = RemoveCommasInName(currentState->GetCombinedStateName());
+        result += name;
+        result = result + "}, ";
+
+        string currentSymbol;
+        for (int j = 0; j < alphabet.size(); ++j) // Loop through alphabet
+        {
+            currentSymbol = alphabet[j];
+            vector<State*> transition = currentState->GetTransition(currentSymbol); // Get the transition for that symbol
+
+            result = result + currentSymbol + " = {" + RemoveCommasInName(transition[0]->GetCombinedStateName()) + "}\n"; // Add the transition part to the string
+            if (j + 1 < alphabet.size()) // If this is not the last time through the alphabet, add the braces and name of the state again
+            {
+                result = result + "{" + name + "}, ";
+            } 
+
+        }
+        
+    }
+
+    cout << "Transition Function: " << '\n' << result << '\n';
+    return result + '\n';
+}
+
+// Removes the excess commas in a state name
+string DFA::RemoveCommasInName(string name)
+{
+    string result;
+    for (int i = 0; i < name.length(); ++i)
+    {
+        if (name.at(i) == ',')
+        {
+            continue;
+        }
+
+        result += name.at(i);
+
+        if (i + 2 < name.length())
+        {
+            result += ", ";
+        }
+    }
+
+    return result;
+}
